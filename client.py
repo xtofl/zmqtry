@@ -8,13 +8,19 @@
 
 import zmq
 import sys
+from argparse import ArgumentParser
+
+parser = ArgumentParser()
+parser.add_argument("--server", default="localhost")
+
+args = parser.parse_args()
 
 context = zmq.Context()
 
 #  Socket to talk to server
 print("Connecting to hello world server…")
 socket = context.socket(zmq.REQ)
-socket.connect("tcp://{}:5555".format(sys.argv[1]))
+socket.connect("tcp://{}:5555".format(args.server))
 
 #  Do 10 requests, waiting each time for a response
 for request in range(10):
